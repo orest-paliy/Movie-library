@@ -38,5 +38,26 @@ final class MovieNetworkService{
         return result.movies
     }
     
+    func getMovieById(id: String) async throws(NetworkError) -> MovieFullInfo{
+        var result: MovieFullInfo
+        
+        guard let url = URL(string: "\(endPoint)&i=\(id)") else{
+            throw NetworkError.invalidURL
+        }
+        
+        do{
+            let (data, response) = try await URLSession.shared.data(from: url)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else{
+                throw NetworkError.requestFailed
+            }
+            result = try JSONDecoder().decode(MovieFullInfo.self, from: data)
+        }catch{
+            print(error)
+            throw .unknownError
+        }
+        
+        return result
+    }
+    
 
 }
