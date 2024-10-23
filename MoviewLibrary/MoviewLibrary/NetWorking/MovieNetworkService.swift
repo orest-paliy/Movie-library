@@ -52,7 +52,6 @@ final class MovieNetworkService{
             }
             result = try JSONDecoder().decode(MovieFullInfo.self, from: data)
         }catch{
-            print(error)
             throw .unknownError
         }
         

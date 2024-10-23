@@ -21,34 +21,52 @@ struct MovieReviewView: View {
                                 .frame(maxHeight: 400)
                                 .aspectRatio(contentMode: .fill)
                                 .opacity(0.15)
-                                .background(.black)
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: 200)
-                                .cornerRadius(10)
-                                .shadow(radius: 20)
-                                .padding(.top, 50)
+                                .background(Color("6"))
+                            HStack{
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: 200)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 20)
+                                    .padding(.top, 50)
+                                VStack(alignment:.leading){
+                                    Text(movie.title)
+                                        .font(.title)
+                                    Text(movie.genre)
+                                    Text("\(movie.country) \(movie.year)")
+                                    Text(movie.runtime)
+                                }
+                                .foregroundStyle(.white)
+                            }.padding(.horizontal)
                         }
                         .ignoresSafeArea()
                         
                     }, placeholder: {
                         ProgressView()
+                            .frame(maxHeight: 400)
                     })
                     
-                    VStack{
-                        Text(movie.title)
-                            .font(.title2)
+                    VStack(alignment: .leading, spacing: 20){
+                        HStack(alignment: .center){
+                            ForEach(viewModel.getActors().prefix(3), id: \.self, content: {actorName in
+                                ActorView(actorName: actorName)
+                            })
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        
+                        Text(movie.plot)
+                            .padding(.horizontal)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                    .offset(y: -70)
+                    .padding(.vertical, -140)
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
             }else{
                 ProgressView()
             }
-        }.onAppear{
+        }
+        .onAppear{
             Task{
                 await viewModel.fetchMovieInfo(movieId: movieId)
             }

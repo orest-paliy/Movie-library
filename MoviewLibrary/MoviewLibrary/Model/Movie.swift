@@ -54,10 +54,10 @@ struct MovieFullInfo: Decodable{
     var imdbVotes: String
     var movieId: String
     var type: String
-    var dvd: String
-    var boxOffice: String
-    var production: String
-    var websiteUrl: String
+    var dvd: String?
+    var boxOffice: String?
+    var production: String?
+    var websiteUrl: String?
     var response: String
     
     private enum CodingKeys: String, CodingKey{

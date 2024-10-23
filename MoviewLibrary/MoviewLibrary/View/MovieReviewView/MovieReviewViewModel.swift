@@ -17,4 +17,9 @@ final class MovieReviewViewModel: ObservableObject{
             print(error)
         }
     }
+    
+    func getActors() -> [String]{
+        guard let actorsAsString = movie?.actors else {return []}
+        return actorsAsString.components(separatedBy: ", ").map{$0}
+    }
 }
