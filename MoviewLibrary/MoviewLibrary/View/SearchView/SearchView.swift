@@ -9,47 +9,62 @@ import SwiftUI
 
 struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
-    @State private var path = NavigationPath()
+    @Binding var path: NavigationPath
     var body: some View {
         VStack{
-            NavigationStack(path: $path, root: {
-                TextField("search", text: $viewModel.searchingName)
+            ZStack{
+                TextField("Search", text: $viewModel.searchingName)
                     .padding()
                     .background(.gray.opacity(0.3))
                     .cornerRadius(20)
-                    .padding()
+                    .padding(.horizontal)
                     .keyboardType(.alphabet)
                     .onChange(of: viewModel.searchingName, {
                         Task{
                             await viewModel.searchByName()
                         }
                     })
-                List{
+                Button(action: {
+                    viewModel.searchingName = ""
+                }, label: {
+                    Image(systemName:
+                            viewModel.searchingName.isEmpty
+                          ? "magnifyingglass.circle"
+                          : "xmark.circle")
+                        .font(.title2)
+                        .foregroundStyle(.black)
+                })
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing, 30)
+            }
+            .frame(alignment: .top)
+            
+            List{
+                if !viewModel.searchingName.isEmpty{
                     ForEach(viewModel.listOfMovie, id: \.id, content: {movie in
                         VStack{
-                            Button(action: {
-                                path.append(movie)
-                            }){
-                                AsyncImage(url: URL(string: movie.posterUrl), content: {image in
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(maxWidth: .infinity, maxHeight: 200)
-                                }, placeholder: {
-                                    ProgressView()
-                                })
-                                Text(movie.title)
+                            HStack{
+                                Image(systemName: "magnifyingglass")
+                                Button(action: {
+                                    path.append(movie)
+                                }){
+                                    Text(movie.title)
+                                        .lineLimit(1)
+                                }
+                                .foregroundStyle(.black)
+                                Text("(\(movie.year))")
                             }
                         }
                     })
-                }.navigationDestination(for: MovieConcise.self, destination: {movie in
-                    MovieReviewView(movieId: movie.id)
-                })
-            })
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                }
+            }
+            .listStyle(PlainListStyle())
         }
     }
 }
 
 #Preview {
-    SearchView()
+    SearchView(path: .constant(NavigationPath()))
 }
