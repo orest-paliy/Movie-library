@@ -39,11 +39,11 @@ struct ActorView: View {
                 Text(actorName)
                     .padding(.horizontal, 5)
                     .frame(width: 100)
-                    .background(.white)
+                    .background(Color("White"))
                     .lineLimit(1)
             }
             .padding(5)
-            .background(.white)
+            .background(Color("White"))
             .cornerRadius(20)
         }
         .shadow(radius: 5)

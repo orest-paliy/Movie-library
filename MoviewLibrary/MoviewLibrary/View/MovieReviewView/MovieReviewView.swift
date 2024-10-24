@@ -21,7 +21,7 @@ struct MovieReviewView: View {
                                 .frame(maxHeight: 400)
                                 .aspectRatio(contentMode: .fill)
                                 .opacity(0.15)
-                                .background(Color("6"))
+                                .background(Color("6").gradient)
                             HStack{
                                 image
                                     .resizable()

@@ -32,7 +32,7 @@ struct SearchView: View {
                           ? "magnifyingglass.circle"
                           : "xmark.circle")
                         .font(.title2)
-                        .foregroundStyle(.black)
+                        .foregroundStyle(Color("Black"))
                 })
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.trailing, 30)
@@ -47,13 +47,15 @@ struct SearchView: View {
                                 Image(systemName: "magnifyingglass")
                                 Button(action: {
                                     path.append(movie)
+                                    SearchingHistoryService.shared.adMovieToSearchHistory(movieId: movie.id)
                                 }){
                                     Text(movie.title)
                                         .lineLimit(1)
                                 }
-                                .foregroundStyle(.black)
                                 Text("(\(movie.year))")
                             }
+                            .foregroundStyle(SearchingHistoryService.shared.isMovieViewed(movieId: movie.id) ? .purple :
+                                Color("OgBlack"))
                         }
                     })
                     .listRowSeparator(.hidden)
@@ -62,6 +64,7 @@ struct SearchView: View {
             }
             .listStyle(PlainListStyle())
         }
+        .background(._1)
     }
 }
 

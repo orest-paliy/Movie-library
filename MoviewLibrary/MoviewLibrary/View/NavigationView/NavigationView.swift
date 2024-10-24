@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NavigationView: View {
+    @AppStorage("isDarkMode") private var isDarkMode = false
+    
     @State var selectedItem: String = "home"
     @State var path = NavigationPath()
     var body: some View {
@@ -19,26 +21,26 @@ struct NavigationView: View {
                     case "search":
                         SearchView(path: $path)
                     case "account":
-                        Text("Account")
+                        AccountView()
                     default:
                         Text("Home2")
                 }
                 
-                HStack(spacing: 20){
+                HStack(spacing: 30){
                     NavigationIconView(selectedItem: $selectedItem, itemType: "home", iconSystemName: "house")
                     NavigationIconView(selectedItem: $selectedItem, itemType: "search", iconSystemName: "magnifyingglass.circle")
                     NavigationIconView(selectedItem: $selectedItem, itemType: "account", iconSystemName: "person")
                 }
-                .padding()
-                .background(.white)
-                .cornerRadius(20)
-                .shadow(radius: 5)
+                .padding(20)
+                .background(.card)
+                .cornerRadius(30)
                 .frame(maxHeight: .infinity, alignment: .bottom)
             }
             .navigationDestination(for: MovieConcise.self, destination: {movie in
                 MovieReviewView(movieId: movie.id)
             })
         })
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 

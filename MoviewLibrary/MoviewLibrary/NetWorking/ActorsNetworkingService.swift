@@ -19,6 +19,7 @@ final class ActorsNetworkingService{
         return "https://api.themoviedb.org/3/search/person?api_key=\(API_Key)"
     }()
     
+    //MARK: Get actor's picture URL
     func loadActorProfileImage(actorName: String) async throws(NetworkError) -> String{
         let url = URL(string: "\(endPoint)&query=\(actorName)")!
         var result = ""

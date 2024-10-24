@@ -19,6 +19,7 @@ final class MovieNetworkService{
         return "https://www.omdbapi.com/?apikey=" + API_key
     }
     
+    //MARK: Get Movie by name
     func getMovieByName(nameOfMovie: String) async throws -> Array<MovieConcise>{
         var result = MoviesResponse(movies: [])
         
@@ -38,6 +39,7 @@ final class MovieNetworkService{
         return result.movies
     }
     
+    //MARK: Get movie full info by id
     func getMovieById(id: String) async throws(NetworkError) -> MovieFullInfo{
         var result: MovieFullInfo
         
