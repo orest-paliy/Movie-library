@@ -10,12 +10,13 @@ import SwiftUI
 struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
     @Binding var path: NavigationPath
+    
     var body: some View {
         VStack{
             ZStack{
                 TextField("Search", text: $viewModel.searchingName)
                     .padding()
-                    .background(.gray.opacity(0.3))
+                    .background(.adaptiveCardBackground)
                     .cornerRadius(20)
                     .padding(.horizontal)
                     .keyboardType(.alphabet)
@@ -31,14 +32,13 @@ struct SearchView: View {
                             viewModel.searchingName.isEmpty
                           ? "magnifyingglass.circle"
                           : "xmark.circle")
-                        .font(.title2)
-                        .foregroundStyle(.black)
+                    .font(.title2)
+                    .foregroundStyle(.adaptiveGray)
                 })
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.trailing, 30)
             }
             .frame(alignment: .top)
-            
             List{
                 if !viewModel.searchingName.isEmpty{
                     ForEach(viewModel.listOfMovie, id: \.id, content: {movie in
@@ -47,13 +47,15 @@ struct SearchView: View {
                                 Image(systemName: "magnifyingglass")
                                 Button(action: {
                                     path.append(movie)
+                                    SearchingHistoryService.shared.adMovieToSearchHistory(movieId: movie.id)
                                 }){
                                     Text(movie.title)
                                         .lineLimit(1)
                                 }
-                                .foregroundStyle(.black)
                                 Text("(\(movie.year))")
                             }
+                            .foregroundStyle(SearchingHistoryService.shared.isMovieViewed(movieId: movie.id) ? .blue :
+                                    .adaptiveBlack)
                         }
                     })
                     .listRowSeparator(.hidden)
@@ -62,6 +64,7 @@ struct SearchView: View {
             }
             .listStyle(PlainListStyle())
         }
+        .background(.adaptiveBackground)
     }
 }
 

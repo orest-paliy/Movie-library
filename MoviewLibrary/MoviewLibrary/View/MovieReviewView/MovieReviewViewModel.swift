@@ -22,4 +22,33 @@ final class MovieReviewViewModel: ObservableObject{
         guard let actorsAsString = movie?.actors else {return []}
         return actorsAsString.components(separatedBy: ", ").map{$0}
     }
+    
+    func isMovieLiked() -> Bool{
+        movie?.movieId == CoreDataManager.shared.fetchMovie(by: movie?.movieId ?? "")?.id
+    }
+    
+    func SaveToggle(){
+        if isMovieLiked(){
+            removeMovieFromSaved()
+        }else {
+            saveMovie()
+        }
+    }
+    
+    private func saveMovie(){
+        guard let movie = movie else {return}
+        let movieConcise = MovieConcise(
+            title: movie.title,
+            year: movie.year,
+            id: movie.movieId,
+            type: movie.type,
+            posterUrl: movie.posterUrl)
+        
+        CoreDataManager.shared.saveMovie(movie: movieConcise)
+    }
+    
+    private func removeMovieFromSaved(){
+        guard let movie = movie else {return}
+        CoreDataManager.shared.deleteMovie(by: movie.movieId)
+    }
 }

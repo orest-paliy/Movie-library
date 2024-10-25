@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct MoviewLibraryApp: App {
+    @AppStorage("isDarkMode") private var isDarkMode = false
     var body: some Scene {
         WindowGroup {
             NavigationView()
+                .preferredColorScheme(isDarkMode ? .dark : .light)
         }
     }
 }

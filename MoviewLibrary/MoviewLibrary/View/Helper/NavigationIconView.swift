@@ -20,9 +20,10 @@ struct NavigationIconView: View {
             selectedItem = itemType
         }){
             Image(systemName: isThisItemSelected ? "\(iconSystemName).fill" : iconSystemName)
-                .font(.title2)
+                .font(.title)
+                .fontWeight(.regular)
         }
-        .foregroundStyle(.black)
+        .foregroundStyle(isThisItemSelected ? .blue : .adaptiveBlack)
     }
 }
 
