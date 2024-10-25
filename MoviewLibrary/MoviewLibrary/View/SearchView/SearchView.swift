@@ -39,22 +39,62 @@ struct SearchView: View {
                 .padding(.trailing, 30)
             }
             .frame(alignment: .top)
+            if viewModel.searchingName.isEmpty{
+                if viewModel.historyItems.isEmpty {
+                    VStack{
+                        Image(systemName: "clock")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .fontWeight(.ultraLight)
+                            .frame(width: 100)
+                        Text("Your search history \nis empty")
+                            .font(.title)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding()
+                    .foregroundStyle(.adaptiveGray)
+                    .background(.adaptiveCardBackground)
+                    .cornerRadius(20)
+                    .padding()
+                }
+            }
             List{
-                if !viewModel.searchingName.isEmpty{
+                if viewModel.searchingName.isEmpty{
+                    if !viewModel.historyItems.isEmpty {
+                        ForEach(viewModel.historyItems, id: \.id, content: {movie in
+                            VStack{
+                                HStack{
+                                    Image(systemName: "clock")
+                                    Button(action: {
+                                        path.append(movie.id ?? "")
+                                    }){
+                                        Text(movie.name ?? "")
+                                            .lineLimit(1)
+                                    }
+                                }
+                                .foregroundStyle(.blue)
+                            }
+                        })
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                    }
+                }else{
                     ForEach(viewModel.listOfMovie, id: \.id, content: {movie in
                         VStack{
                             HStack{
                                 Image(systemName: "magnifyingglass")
                                 Button(action: {
                                     path.append(movie)
-                                    SearchingHistoryService.shared.adMovieToSearchHistory(movieId: movie.id)
+                                    if !viewModel.isMovieViewed(id: movie.id){
+                                        viewModel.addMovieToHistory(id: movie.id, name: movie.title)
+                                    }
                                 }){
                                     Text(movie.title)
                                         .lineLimit(1)
                                 }
                                 Text("(\(movie.year))")
                             }
-                            .foregroundStyle(SearchingHistoryService.shared.isMovieViewed(movieId: movie.id) ? .blue :
+                            .foregroundStyle(viewModel.isMovieViewed(id: movie.id) ? .blue :
                                     .adaptiveBlack)
                         }
                     })
@@ -63,6 +103,9 @@ struct SearchView: View {
                 }
             }
             .listStyle(PlainListStyle())
+        }
+        .onAppear{
+            viewModel.loadHistoryList()
         }
         .background(.adaptiveBackground)
     }

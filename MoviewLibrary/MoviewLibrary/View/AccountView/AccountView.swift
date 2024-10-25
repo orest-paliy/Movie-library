@@ -12,6 +12,7 @@ struct AccountView: View {
     @AppStorage("showHistory") private var showHistory = true
     
     @State var showLibraryDeletionAlert = false
+    @State var showHistoryDeletionAlert = false
     
     let viewModel = AccountViewModel()
     
@@ -40,14 +41,25 @@ struct AccountView: View {
                 
                 Section("Privacy"){
                     Toggle("Show search history", isOn: $showHistory)
-                    HStack{
-                        Label("Clear search history", systemImage: "magnifyingglass")
-                            .foregroundStyle(.adaptiveBlack)
-                        Spacer()
-                        Image(systemName: "trash")
-                            .foregroundStyle(.red)
+                    Button(action: {
+                        showHistoryDeletionAlert = true
+                    }){
+                        HStack{
+                            Label("Clear search history", systemImage: "magnifyingglass")
+                                .foregroundStyle(.adaptiveBlack)
+                            Spacer()
+                            Image(systemName: "trash")
+                                .foregroundStyle(.red)
+                        }
+                        .foregroundStyle(.white)
                     }
-                    .foregroundStyle(.white)
+                    .alert(isPresented: $showHistoryDeletionAlert, content: {
+                        Alert(title: Text("Are you sure you want to clear your search history?"),
+                            primaryButton: .destructive(Text("Delete"), action: {
+                                viewModel.clearHistory()
+                            }),
+                            secondaryButton: .cancel())
+                    })
                     
                     
                     Button(action: {
@@ -64,10 +76,9 @@ struct AccountView: View {
                     .alert(isPresented: $showLibraryDeletionAlert, content: {
                         Alert(
                             title: Text("Are you sure you want to delete all saved movies?"),
-                            primaryButton:
-                                    .destructive(Text("Delete"), action: {
-                                    viewModel.clearMovieLibrary()
-                                }),
+                            primaryButton: .destructive(Text("Delete"), action: {
+                                viewModel.clearMovieLibrary()
+                            }),
                             secondaryButton: .cancel())
                     })
                     

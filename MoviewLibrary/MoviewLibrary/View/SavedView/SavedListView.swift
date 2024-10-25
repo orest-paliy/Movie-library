@@ -84,12 +84,14 @@ struct SavedListView: View {
                         .font(.title)
                         .multilineTextAlignment(.center)
                 }
+                .padding()
                 .foregroundStyle(viewModel.searchingTitle.isEmpty ? .adaptiveGray : .red)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(width: 300, height: 300)
                 .background(.adaptiveCardBackground)
                 .cornerRadius(20)
                 .padding()
                 .padding(.bottom, 80)
+                .frame(maxHeight: .infinity)
             }
         }
         .background(.adaptiveBackground)
