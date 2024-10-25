@@ -16,7 +16,7 @@ final class SavedListViewModel: ObservableObject{
     }
     
     private func loadArray() -> [MovieConcise]{
-        CoreDataManager.shared.fetchMovies()
+        MovieCoreDataManager.shared.fetchMovies()
     }
     
     public func search(){

@@ -42,6 +42,9 @@ struct NavigationView: View {
             .navigationDestination(for: MovieConcise.self, destination: {movie in
                 MovieReviewView(movieId: movie.id)
             })
+            .navigationDestination(for: String.self, destination: {id in
+                MovieReviewView(movieId: id)
+            })
         })
         .preferredColorScheme(isDarkMode ? .dark : .light)
     }

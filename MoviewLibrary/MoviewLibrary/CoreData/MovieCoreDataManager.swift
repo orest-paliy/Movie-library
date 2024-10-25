@@ -8,53 +8,30 @@
 import Foundation
 import CoreData
 
-final class CoreDataManager{
-    public static let shared = CoreDataManager()
+final class MovieCoreDataManager{
+    public static let shared = MovieCoreDataManager()
     private init(){}
     
-    lazy var persistanceContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "MovieData")
-        container.loadPersistentStores(completionHandler: { _, error in
-            if let error = error{
-                print(error.localizedDescription)
-            }
-        })
-        return container
-    }()
-    
-    lazy var persistanceContext: NSManagedObjectContext = {
-        persistanceContainer.viewContext
-    }()
-    
-    private func saveContext(){
-        if persistanceContext.hasChanges{
-            do{
-                try persistanceContext.save()
-            }catch {
-                let error = error as NSError
-                print(error.localizedDescription)
-            }
-        }
-    }
+    private let persistanceManager = PersistanceManager()
     
     // MARK: CREATE
     func saveMovie(movie: MovieConcise){
-        guard let movieEntityDescription = NSEntityDescription.entity(forEntityName: "Movie", in: persistanceContext) else{ return }
-        let movieEntity = Movie(entity: movieEntityDescription, insertInto: persistanceContext)
+        guard let movieEntityDescription = NSEntityDescription.entity(forEntityName: "Movie", in: persistanceManager.persistanceContext) else{ return }
+        let movieEntity = Movie(entity: movieEntityDescription, insertInto: persistanceManager.persistanceContext)
         movieEntity.id = movie.id
         movieEntity.title = movie.title
         movieEntity.year = movie.year
         movieEntity.type = movie.type
         movieEntity.posterUrl = movie.posterUrl
         
-        saveContext()
+        persistanceManager.saveContext()
     }
     
     // MARK: READ
     func fetchMovies() -> [MovieConcise]{
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
         do{
-            guard let movies = try persistanceContext.fetch(request) as? [Movie] else {return []}
+            guard let movies = try persistanceManager.persistanceContext.fetch(request) as? [Movie] else {return []}
             var moviesAsStruct: [MovieConcise] = []
             
             for movie in movies {
@@ -78,7 +55,7 @@ final class CoreDataManager{
     
     func fetchMovie(by id: String) -> MovieConcise?{
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-        let movies = try? persistanceContext.fetch(fetchRequest) as? [Movie] ?? []
+        let movies = try? persistanceManager.persistanceContext.fetch(fetchRequest) as? [Movie] ?? []
         guard let movieById = movies?.first(where: {$0.id == id}) else {return nil}
         let movieAsStruct = MovieConcise(title: movieById.title!,
                                          year: movieById.year!,
@@ -92,20 +69,20 @@ final class CoreDataManager{
     
     func deleteAllMovies(){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-        let movies = try? persistanceContext.fetch(fetchRequest) as? [Movie] ?? []
+        let movies = try? persistanceManager.persistanceContext.fetch(fetchRequest) as? [Movie] ?? []
         
         for movie in movies ?? [] {
-            persistanceContext.delete(movie)
+            persistanceManager.persistanceContext.delete(movie)
         }
-        saveContext()
+        persistanceManager.saveContext()
     }
     
     func deleteMovie(by id: String){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-        let movies = try? persistanceContext.fetch(fetchRequest) as? [Movie] ?? []
+        let movies = try? persistanceManager.persistanceContext.fetch(fetchRequest) as? [Movie] ?? []
         if let movieForDelete = movies?.first(where: {$0.id == id}){
-            persistanceContext.delete(movieForDelete)
+            persistanceManager.persistanceContext.delete(movieForDelete)
         }
-        saveContext()
+        persistanceManager.saveContext()
     }
 }

@@ -24,7 +24,7 @@ final class MovieReviewViewModel: ObservableObject{
     }
     
     func isMovieLiked() -> Bool{
-        movie?.movieId == CoreDataManager.shared.fetchMovie(by: movie?.movieId ?? "")?.id
+        movie?.movieId == MovieCoreDataManager.shared.fetchMovie(by: movie?.movieId ?? "")?.id
     }
     
     func SaveToggle(){
@@ -44,11 +44,11 @@ final class MovieReviewViewModel: ObservableObject{
             type: movie.type,
             posterUrl: movie.posterUrl)
         
-        CoreDataManager.shared.saveMovie(movie: movieConcise)
+        MovieCoreDataManager.shared.saveMovie(movie: movieConcise)
     }
     
     private func removeMovieFromSaved(){
         guard let movie = movie else {return}
-        CoreDataManager.shared.deleteMovie(by: movie.movieId)
+        MovieCoreDataManager.shared.deleteMovie(by: movie.movieId)
     }
 }
