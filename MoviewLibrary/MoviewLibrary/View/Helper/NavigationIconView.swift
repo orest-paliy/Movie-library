@@ -23,7 +23,7 @@ struct NavigationIconView: View {
                 .font(.title)
                 .fontWeight(.regular)
         }
-        .foregroundStyle(.ogBlack)
+        .foregroundStyle(isThisItemSelected ? .blue : .adaptiveBlack)
     }
 }
 

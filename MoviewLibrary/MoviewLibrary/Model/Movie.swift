@@ -31,8 +31,6 @@ struct MovieConcise: Decodable, Hashable{
     }
 }
 
-
-
 struct MovieFullInfo: Decodable{
     var title: String
     var year: String

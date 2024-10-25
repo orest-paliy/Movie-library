@@ -12,7 +12,6 @@ struct ActorView: View {
     var actorName: String
     var body: some View {
         VStack{
-            ZStack(alignment: .bottom){
                 if viewModel.error == nil {
                     if !viewModel.actorUrl.isEmpty{
                         AsyncImage(url: URL(string: viewModel.actorUrl), content: {image in
@@ -31,22 +30,17 @@ struct ActorView: View {
                             .aspectRatio(contentMode: .fit)
                             .padding()
                             .frame(width: 100, height: 140)
-                            .foregroundStyle(Color("3"))
-                            .background(Color("2"))
+                            .foregroundStyle(.adaptiveCardBackground)
+                            .background(.adaptiveBackground)
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                     }
                 }
                 Text(actorName)
                     .padding(.horizontal, 5)
                     .frame(width: 100)
-                    .background(Color("White"))
                     .lineLimit(1)
-            }
-            .padding(5)
-            .background(Color("White"))
-            .cornerRadius(20)
         }
-        .shadow(radius: 5)
+        .cornerRadius(20)
         .onAppear{
             Task{
                 await viewModel.fetchActorImage(actorName: actorName)

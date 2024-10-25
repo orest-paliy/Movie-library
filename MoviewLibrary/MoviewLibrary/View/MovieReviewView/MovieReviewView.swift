@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovieReviewView: View {
     @StateObject private var viewModel = MovieReviewViewModel()
+    @State var isMovieLiked: Bool = false
     var movieId: String
     var body: some View {
         VStack{
@@ -21,7 +22,7 @@ struct MovieReviewView: View {
                                 .frame(maxHeight: 400)
                                 .aspectRatio(contentMode: .fill)
                                 .opacity(0.15)
-                                .background(Color("6").gradient)
+                                .background(.black.gradient)
                             HStack{
                                 image
                                     .resizable()
@@ -36,10 +37,23 @@ struct MovieReviewView: View {
                                     Text(movie.genre)
                                     Text("\(movie.country) \(movie.year)")
                                     Text(movie.runtime)
+                                    Button(action: {
+                                        viewModel.SaveToggle()
+                                        isMovieLiked = viewModel.isMovieLiked()
+                                    }, label: {
+                                        Image(systemName: isMovieLiked ? "bookmark.fill" : "bookmark")
+                                            .foregroundStyle(isMovieLiked ? .blue : .white)
+                                            .font(.title2)
+                                    })
+                                    .onAppear{
+                                        isMovieLiked = viewModel.isMovieLiked()
+                                    }
                                 }
                                 .foregroundStyle(.white)
-                            }.padding(.horizontal)
+                            }
+                            .padding(.horizontal)
                         }
+                        .frame(maxHeight: 400)
                         .ignoresSafeArea()
                         
                     }, placeholder: {
@@ -47,25 +61,31 @@ struct MovieReviewView: View {
                             .frame(maxHeight: 400)
                     })
                     
-                    VStack(alignment: .leading, spacing: 20){
-                        HStack(alignment: .center){
-                            ForEach(viewModel.getActors().prefix(3), id: \.self, content: {actorName in
-                                ActorView(actorName: actorName)
-                            })
+                    Form{
+                        Section("Main actors"){
+                            VStack(alignment: .leading, spacing: 20){
+                                HStack(alignment: .center){
+                                    ForEach(viewModel.getActors().prefix(3), id: \.self, content: {actorName in
+                                        ActorView(actorName: actorName)
+                                    })
+                                }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            }
                         }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        
-                        Text(movie.plot)
-                            .padding(.horizontal)
+                        Section("Plot"){
+                            Text(movie.plot)
+                                .padding(.horizontal)
+                        }.listRowSeparator(.hidden)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.vertical, -140)
+                    .padding(.top, -100)
+                    .frame(maxHeight: .infinity)
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
             }else{
                 ProgressView()
             }
         }
+        .background(.adaptiveBackground)
         .onAppear{
             Task{
                 await viewModel.fetchMovieInfo(movieId: movieId)

@@ -15,7 +15,7 @@ struct SearchView: View {
             ZStack{
                 TextField("Search", text: $viewModel.searchingName)
                     .padding()
-                    .background(.gray.opacity(0.3))
+                    .background(.adaptiveCardBackground)
                     .cornerRadius(20)
                     .padding(.horizontal)
                     .keyboardType(.alphabet)
@@ -32,7 +32,7 @@ struct SearchView: View {
                           ? "magnifyingglass.circle"
                           : "xmark.circle")
                         .font(.title2)
-                        .foregroundStyle(Color("Black"))
+                        .foregroundStyle(.adaptiveGray)
                 })
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.trailing, 30)
@@ -54,8 +54,8 @@ struct SearchView: View {
                                 }
                                 Text("(\(movie.year))")
                             }
-                            .foregroundStyle(SearchingHistoryService.shared.isMovieViewed(movieId: movie.id) ? .purple :
-                                Color("OgBlack"))
+                            .foregroundStyle(SearchingHistoryService.shared.isMovieViewed(movieId: movie.id) ? .blue :
+                                    .adaptiveBlack)
                         }
                     })
                     .listRowSeparator(.hidden)
@@ -64,7 +64,7 @@ struct SearchView: View {
             }
             .listStyle(PlainListStyle())
         }
-        .background(._1)
+        .background(.adaptiveBackground)
     }
 }
 
