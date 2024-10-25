@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
     @Binding var path: NavigationPath
+    
     var body: some View {
         VStack{
             ZStack{
@@ -31,14 +32,13 @@ struct SearchView: View {
                             viewModel.searchingName.isEmpty
                           ? "magnifyingglass.circle"
                           : "xmark.circle")
-                        .font(.title2)
-                        .foregroundStyle(.adaptiveGray)
+                    .font(.title2)
+                    .foregroundStyle(.adaptiveGray)
                 })
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.trailing, 30)
             }
             .frame(alignment: .top)
-            
             List{
                 if !viewModel.searchingName.isEmpty{
                     ForEach(viewModel.listOfMovie, id: \.id, content: {movie in

@@ -40,6 +40,7 @@ struct SavedListView: View {
             }
             .frame(alignment: .top)
             
+            if !viewModel.savedItemList.isEmpty {
             ScrollView(showsIndicators: false){
                 LazyVGrid(columns: columns, spacing: 10){
                     ForEach(viewModel.savedItemList, id: \.id, content: {movie in
@@ -71,6 +72,24 @@ struct SavedListView: View {
                     })
                 }
                 .padding()
+            }
+            }else{
+                VStack{
+                    Image(systemName: viewModel.searchingTitle.isEmpty ? "folder" : "xmark.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 100)
+                        .fontWeight(.ultraLight)
+                    Text(viewModel.searchingTitle.isEmpty ? "Your library is empty" : "No Such movie \nin saved")
+                        .font(.title)
+                        .multilineTextAlignment(.center)
+                }
+                .foregroundStyle(viewModel.searchingTitle.isEmpty ? .adaptiveGray : .red)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.adaptiveCardBackground)
+                .cornerRadius(20)
+                .padding()
+                .padding(.bottom, 80)
             }
         }
         .background(.adaptiveBackground)
