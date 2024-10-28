@@ -16,7 +16,12 @@ final class SavedListViewModel: ObservableObject{
     }
     
     private func loadArray() -> [MovieConcise]{
-        MovieCoreDataManager.shared.fetchMovies()
+        let movieAsEntityArray: [Movie] = CoreDataManager.shared.fetch<Movie>(entityName: EntityType.movie.rawValue)
+        var moviesStructArray: [MovieConcise] = []
+        movieAsEntityArray.forEach({
+            moviesStructArray.append(MovieConcise(title: $0.title!, year: $0.year!, id: $0.id!, type: $0.type!, posterUrl: $0.posterUrl!))
+        })
+        return moviesStructArray
     }
     
     public func search(){

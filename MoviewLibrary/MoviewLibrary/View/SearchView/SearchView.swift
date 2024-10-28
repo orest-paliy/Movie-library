@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
+    @AppStorage("showHistory") private var showHistory = true
     @StateObject private var viewModel = SearchViewModel()
     @Binding var path: NavigationPath
     
@@ -60,29 +61,31 @@ struct SearchView: View {
             }
             List{
                 if viewModel.searchingName.isEmpty{
-                    if !viewModel.historyItems.isEmpty {
-                        ForEach(viewModel.historyItems, id: \.id, content: {movie in
-                            VStack{
-                                HStack{
-                                    Image(systemName: "clock")
-                                    Button(action: {
-                                        path.append(movie.id ?? "")
-                                    }){
-                                        Text(movie.name ?? "")
-                                            .lineLimit(1)
+                    if showHistory{
+                        if !viewModel.historyItems.isEmpty {
+                            ForEach(viewModel.historyItems, id: \.id, content: {movie in
+                                VStack{
+                                    HStack{
+                                        Image(systemName: "clock")
+                                        Button(action: {
+                                            path.append(movie.id ?? "")
+                                        }){
+                                            Text(movie.name ?? "")
+                                                .lineLimit(1)
+                                        }
                                     }
+                                    .foregroundStyle(.blue)
                                 }
-                                .foregroundStyle(.blue)
-                            }
-                        })
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
+                            })
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
+                        }
                     }
                 }else{
                     ForEach(viewModel.listOfMovie, id: \.id, content: {movie in
                         VStack{
                             HStack{
-                                Image(systemName: "magnifyingglass")
+                                Image(systemName: viewModel.isMovieViewed(id: movie.id) && showHistory ? "clock" :"magnifyingglass")
                                 Button(action: {
                                     path.append(movie)
                                     if !viewModel.isMovieViewed(id: movie.id){
@@ -94,7 +97,7 @@ struct SearchView: View {
                                 }
                                 Text("(\(movie.year))")
                             }
-                            .foregroundStyle(viewModel.isMovieViewed(id: movie.id) ? .blue :
+                            .foregroundStyle(viewModel.isMovieViewed(id: movie.id) && showHistory ? .blue :
                                     .adaptiveBlack)
                         }
                     })

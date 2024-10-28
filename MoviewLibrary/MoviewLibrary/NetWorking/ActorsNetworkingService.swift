@@ -31,7 +31,7 @@ final class ActorsNetworkingService{
             }
             
             do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
                    let results = json["results"] as? [[String: Any]],
                    let firstResult = results.first,
                    let profilePath = firstResult["profile_path"] as? String {

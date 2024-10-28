@@ -5,10 +5,10 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Movie" representedClassName="Movie" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="posterUrl" optional="YES" attributeType="String"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
-        <attribute name="type" optional="YES" attributeType="String"/>
-        <attribute name="year" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="posterUrl" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <attribute name="year" attributeType="String"/>
     </entity>
 </model>
