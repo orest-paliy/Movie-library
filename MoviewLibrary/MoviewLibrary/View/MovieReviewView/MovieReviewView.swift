@@ -39,14 +39,14 @@ struct MovieReviewView: View {
                                     Text(movie.runtime)
                                     Button(action: {
                                         viewModel.SaveToggle()
-                                        isMovieLiked = viewModel.isMovieLiked()
+                                        isMovieLiked = viewModel.isMovieSaved()
                                     }, label: {
                                         Image(systemName: isMovieLiked ? "bookmark.fill" : "bookmark")
                                             .foregroundStyle(isMovieLiked ? .blue : .white)
                                             .font(.title2)
                                     })
                                     .onAppear{
-                                        isMovieLiked = viewModel.isMovieLiked()
+                                        isMovieLiked = viewModel.isMovieSaved()
                                     }
                                 }
                                 .foregroundStyle(.white)

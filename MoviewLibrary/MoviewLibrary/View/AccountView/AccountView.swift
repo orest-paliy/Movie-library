@@ -56,7 +56,7 @@ struct AccountView: View {
                     .alert(isPresented: $showHistoryDeletionAlert, content: {
                         Alert(title: Text("Are you sure you want to clear your search history?"),
                             primaryButton: .destructive(Text("Delete"), action: {
-                                viewModel.clearHistory()
+                            viewModel.clear(entityName: EntityType.historyItem.rawValue)
                             }),
                             secondaryButton: .cancel())
                     })
@@ -77,7 +77,7 @@ struct AccountView: View {
                         Alert(
                             title: Text("Are you sure you want to delete all saved movies?"),
                             primaryButton: .destructive(Text("Delete"), action: {
-                                viewModel.clearMovieLibrary()
+                                viewModel.clear(entityName: EntityType.movie.rawValue)
                             }),
                             secondaryButton: .cancel())
                     })

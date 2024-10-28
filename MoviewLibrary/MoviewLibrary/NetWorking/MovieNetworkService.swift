@@ -20,7 +20,7 @@ final class MovieNetworkService{
     }
     
     //MARK: Get Movie by name
-    func getMovieByName(nameOfMovie: String) async throws -> Array<MovieConcise>{
+    func getMovieByName(nameOfMovie: String) async throws -> [MovieConcise]{
         var result = MoviesResponse(movies: [])
         
         guard let url = URL(string: "\(endPoint)&s=\(nameOfMovie)") else {

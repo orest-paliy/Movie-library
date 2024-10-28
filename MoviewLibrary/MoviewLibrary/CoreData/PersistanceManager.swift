@@ -12,7 +12,7 @@ final class PersistanceManager{
         let container = NSPersistentContainer(name: "MovieData")
         container.loadPersistentStores(completionHandler: { _, error in
             if let error = error{
-                print(error.localizedDescription)
+                assertionFailure(error.localizedDescription)
             }
         })
         return container

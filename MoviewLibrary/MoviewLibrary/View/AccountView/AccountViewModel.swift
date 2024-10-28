@@ -8,11 +8,7 @@
 import Foundation
 
 final class AccountViewModel{
-    func clearMovieLibrary(){
-        MovieCoreDataManager.shared.deleteAllMovies()
-    }
-    
-    func clearHistory(){
-        HistoryCoreDataManager.shared.deleteAllHistory()
+    func clear(entityName: String){
+        CoreDataManager.shared.delete(entityName:entityName)
     }
 }

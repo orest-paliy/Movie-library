@@ -21,17 +21,17 @@ final class SearchViewModel: ObservableObject{
     }
     
     func isMovieViewed(id: String) -> Bool{
-        let item: HistoryItem? = HistoryCoreDataManager.shared.fetchHistoryItem(by: id)
+        let item: HistoryItem? = CoreDataManager.shared.fetch(by: id, entityName: EntityType.historyItem.rawValue)
         guard let _ = item else {return false}
         return true
     }
     
     func addMovieToHistory(id: String, name: String){
-        HistoryCoreDataManager.shared.saveHistoryItem(id: id, name: name)
+        CoreDataManager.shared.saveHistoryItem(id: id, name: name)
     }
     
     func loadHistoryList(){
-        historyItems = HistoryCoreDataManager.shared.fethHistory()
+        historyItems = CoreDataManager.shared.fetch(entityName: EntityType.historyItem.rawValue)
         historyItems.reverse()
     }
 }
