@@ -10,6 +10,8 @@ import SwiftUI
 struct AccountView: View {
     @AppStorage("isDarkMode") private var isDarkMode = false
     @AppStorage("showHistory") private var showHistory = true
+    @AppStorage("isAuthenticated") private var isAuthenticated = false
+
     
     @State var showLibraryDeletionAlert = false
     @State var showHistoryDeletionAlert = false
@@ -31,7 +33,7 @@ struct AccountView: View {
                     .fontWeight(.ultraLight)
                     .foregroundStyle(.white)
             }
-            Text("Your name")
+            Text(UserDefaults.standard.string(forKey: "userEmail") ?? "")
                 .font(.title2)
             
             Form{
@@ -81,6 +83,13 @@ struct AccountView: View {
                             }),
                             secondaryButton: .cancel())
                     })
+                    
+                    Button(action: {
+                        isAuthenticated = false
+                    }){
+                        Label("Log out", systemImage: "rectangle.portrait.and.arrow.right")
+                    }
+                    .foregroundStyle(.red)
                     
                 }
             }

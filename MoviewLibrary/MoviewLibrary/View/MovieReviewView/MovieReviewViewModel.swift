@@ -25,7 +25,7 @@ final class MovieReviewViewModel: ObservableObject{
     
     func isMovieSaved() -> Bool{
         guard let movie = movie,
-              let _ = CoreDataManager.shared.fetch<Movie>(by: movie.movieId, entityName: "Movie")
+              let _ :Movie = CoreDataManager.shared.fetch(by: movie.movieId, entityName: "Movie")
         else {return false}
         return true
     }
