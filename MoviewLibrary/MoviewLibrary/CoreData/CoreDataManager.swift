@@ -37,13 +37,13 @@ final class CoreDataManager{
     
     //MARK: GENERIC CRUD
     
-    func fetch<T: NSManagedObject>(entityName: String) -> [T]{
+    func fetch<T: NSFetchRequestResult>(entityName: String) -> [T]{
         let fetchRequest = NSFetchRequest<T>(entityName: entityName)
         let requestResult = try? persistanceManager.persistanceContext.fetch(fetchRequest)
         return requestResult ?? []
     }
     
-    func fetch<T: NSManagedObject>(by id: String, entityName: String) -> T?{
+    func fetch<T: NSFetchRequestResult>(by id: String, entityName: String) -> T?{
         let fetchRequest = NSFetchRequest<T>(entityName: entityName)
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         let requestResult = try? persistanceManager.persistanceContext.fetch(fetchRequest)
@@ -51,7 +51,7 @@ final class CoreDataManager{
     }
     
     func delete(entityName: String){
-        let itemsForDeletion = fetch(entityName: entityName)
+        let itemsForDeletion: [NSManagedObject] = fetch(entityName: entityName)
         itemsForDeletion.forEach({
             persistanceManager.persistanceContext.delete($0)
         })
@@ -59,7 +59,7 @@ final class CoreDataManager{
     }
     
     func delete(by id: String, entityName: String){
-        guard let itemForDeletion = fetch(by: id, entityName: entityName) else {return}
+        guard let itemForDeletion: NSManagedObject = fetch(by: id, entityName: entityName) else {return}
         persistanceManager.persistanceContext.delete(itemForDeletion)
         persistanceManager.saveContext()
     }

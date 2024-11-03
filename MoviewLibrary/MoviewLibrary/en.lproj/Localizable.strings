@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  MoviewLibrary
+
+  Created by Orest Palii on 03.11.2024.
+  
+*/
+//Auth basic
+"email" = "Email";
+"password" = "Password";
+"signIn" = "Sign In";
+"signUp" = "Sign Up";
+"switchToSignIn" = "I already have an account";
+"switchToSignUp" = "I don't have an account yet";
+
+//Auth validation errors
+"emptyEmail" = "Email cannot be empty";
+"emptyPassword" = "Password cannot be empty";
+"invalidEmail" = "Invalid email address";
+"tooShortPassword" = "The password must be at least 8 characters long";
+"authValidationErrorTitle" = "Auth validation error";
+
+//Auth error
+"authErrorTitle" = "Authentication problems";
+"noSuchUser" = "Incorrect login or password";
+"alreadyExists" = "An account with such mail already exists";
