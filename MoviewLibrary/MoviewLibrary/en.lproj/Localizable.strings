@@ -8,10 +8,13 @@
 //Auth basic
 "email" = "Email";
 "password" = "Password";
+"passwordConfirmation" = "Password confirmation";
 "signIn" = "Sign In";
 "signUp" = "Sign Up";
 "switchToSignIn" = "I already have an account";
-"switchToSignUp" = "I don't have an account yet";
+"switchToSignUp" = "Don't have an account?";
+"wellcomeTitle" = "Wellcome";
+"wellcomeDesc" = "We are glad to see you in our movie library";
 
 //Auth validation errors
 "emptyEmail" = "Email cannot be empty";
@@ -19,6 +22,8 @@
 "invalidEmail" = "Invalid email address";
 "tooShortPassword" = "The password must be at least 8 characters long";
 "authValidationErrorTitle" = "Auth validation error";
+"passwordsNotMathcing" = "Passwords do not match";
+
 
 //Auth error
 "authErrorTitle" = "Authentication problems";

@@ -13,4 +13,6 @@ enum AuthError: String{
     case invalidEmail = "invalidEmail"
     case tooShortPassword = "tooShortPassword"
     case alreadyExists = "alreadyExists"
+    case passwordsNotMathcing = "passwordsNotMathcing"
+    case noUserWithSuchCredentionals = "noSuchUser"
 }

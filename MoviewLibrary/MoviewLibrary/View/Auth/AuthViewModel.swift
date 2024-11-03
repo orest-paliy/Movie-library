@@ -10,10 +10,10 @@ import SwiftUI
 final class AuthViewModel: ObservableObject{
     var email: String = ""
     var password: String = ""
+    var passwordConfirmation: String = ""
     
     @Published var isSignUp: Bool = true
     @Published var validationError: AuthError?
-    @Published var authError: Bool = false
     
     @AppStorage("isAuthenticated") private var isAuthenticated = false
     
@@ -38,6 +38,10 @@ final class AuthViewModel: ObservableObject{
             validationError = .emptyPassword
         }else if password.count < 8{
             validationError = .tooShortPassword
+        }else if isSignUp{
+            if password != passwordConfirmation{
+                validationError = .passwordsNotMathcing
+            }
         }
         return validationError == nil
     }
@@ -54,7 +58,6 @@ final class AuthViewModel: ObservableObject{
                 }catch{
                     await MainActor.run{
                         validationError = .alreadyExists
-                        authError = true
                     }
                 }
             }
@@ -63,7 +66,6 @@ final class AuthViewModel: ObservableObject{
     
     func signIn(){
         if isEmailValid && isPasswordValid{
-            authError = false
             Task{
                 do{
                     try await FirebaseAuthManager.shared.signIn(email: email, password: password)
@@ -73,7 +75,7 @@ final class AuthViewModel: ObservableObject{
                     }
                 }catch{
                     await MainActor.run {
-                        authError = true
+                        validationError = .noUserWithSuchCredentionals
                     }
                 }
             }
