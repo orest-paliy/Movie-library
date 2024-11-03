@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4BA152872CD8061700395490 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 4BA152862CD8061700395490 /* WrappingHStack */; };
+		4BA152892CD807FB00395490 /* allGenres.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4BA152882CD807FB00395490 /* allGenres.rtf */; };
 		4BD097702CD794870026D2C7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4BD0976F2CD794870026D2C7 /* FirebaseAuth */; };
 		4BD097722CD7948F0026D2C7 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4BD097712CD7948F0026D2C7 /* FirebaseCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4B8713F12CC7FFBF00B8B4FA /* MoviewLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviewLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BA152882CD807FB00395490 /* allGenres.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = allGenres.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -42,6 +45,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4BD097722CD7948F0026D2C7 /* FirebaseCore in Frameworks */,
+				4BA152872CD8061700395490 /* WrappingHStack in Frameworks */,
 				4BD097702CD794870026D2C7 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +56,7 @@
 		4B8713E82CC7FFBF00B8B4FA = {
 			isa = PBXGroup;
 			children = (
+				4BA152882CD807FB00395490 /* allGenres.rtf */,
 				4B8713F32CC7FFBF00B8B4FA /* MoviewLibrary */,
 				4BD0976E2CD794870026D2C7 /* Frameworks */,
 				4B8713F22CC7FFBF00B8B4FA /* Products */,
@@ -95,6 +100,7 @@
 			packageProductDependencies = (
 				4BD0976F2CD794870026D2C7 /* FirebaseAuth */,
 				4BD097712CD7948F0026D2C7 /* FirebaseCore */,
+				4BA152862CD8061700395490 /* WrappingHStack */,
 			);
 			productName = MoviewLibrary;
 			productReference = 4B8713F12CC7FFBF00B8B4FA /* MoviewLibrary.app */;
@@ -126,6 +132,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				4B61CF9D2CD793C100225F1F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				4BA152852CD8061700395490 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4B8713F22CC7FFBF00B8B4FA /* Products */;
@@ -142,6 +149,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BA152892CD807FB00395490 /* allGenres.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,9 +377,22 @@
 				minimumVersion = 11.4.0;
 			};
 		};
+		4BA152852CD8061700395490 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dkk/WrappingHStack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.11;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4BA152862CD8061700395490 /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4BA152852CD8061700395490 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			productName = WrappingHStack;
+		};
 		4BD0976F2CD794870026D2C7 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4B61CF9D2CD793C100225F1F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

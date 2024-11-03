@@ -11,6 +11,7 @@ struct AccountView: View {
     @AppStorage("isDarkMode") private var isDarkMode = false
     @AppStorage("showHistory") private var showHistory = true
     @AppStorage("isAuthenticated") private var isAuthenticated = false
+    @AppStorage("isFavGenresSelected") private var isFavGenresSelected = false
 
     
     @State var showLibraryDeletionAlert = false
@@ -86,6 +87,7 @@ struct AccountView: View {
                     
                     Button(action: {
                         isAuthenticated = false
+                        isFavGenresSelected = false
                     }){
                         Label("Log out", systemImage: "rectangle.portrait.and.arrow.right")
                     }

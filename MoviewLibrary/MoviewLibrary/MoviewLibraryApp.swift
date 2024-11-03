@@ -19,13 +19,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct MoviewLibraryApp: App {
     @AppStorage("isAuthenticated") private var isAuthenticated = false
+    @AppStorage("isFavGenresSelected") private var isFavGenresSelected = false
     @AppStorage("isDarkMode") private var isDarkMode = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
             if isAuthenticated{
-                NavigationView()
-                    .preferredColorScheme(isDarkMode ? .dark : .light)
+                if isFavGenresSelected{
+                    NavigationView()
+                        .preferredColorScheme(isDarkMode ? .dark : .light)
+                }else{
+                    FavoriteGenresView()
+                }
             }else{
                 AuthView()
             }

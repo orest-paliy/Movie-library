@@ -52,8 +52,7 @@ final class AuthViewModel: ObservableObject{
                 do{
                     try await FirebaseAuthManager.shared.signUp(email: email, password: password)
                     await MainActor.run {
-                        isSignUp = false
-                        password = ""
+                        saveUserCredentionals()
                     }
                 }catch{
                     await MainActor.run{
@@ -70,8 +69,7 @@ final class AuthViewModel: ObservableObject{
                 do{
                     try await FirebaseAuthManager.shared.signIn(email: email, password: password)
                     await MainActor.run {
-                        isAuthenticated = true
-                        UserDefaults.standard.set(email, forKey: "userEmail")
+                        saveUserCredentionals()
                     }
                 }catch{
                     await MainActor.run {
@@ -80,6 +78,11 @@ final class AuthViewModel: ObservableObject{
                 }
             }
         }
+    }
+    
+    private func saveUserCredentionals(){
+        isAuthenticated = true
+        UserDefaults.standard.set(email, forKey: "userEmail")
     }
     
 }
