@@ -10,7 +10,8 @@ import WrappingHStack
 
 struct FavoriteGenresView: View {
     @StateObject var viewModel = FavoriteGenresViewModel()
-
+    @Binding var genresWereSelected: Bool
+    
     var body: some View {
         Text("Favorite movie genres")
             .font(.title)
@@ -55,7 +56,8 @@ struct FavoriteGenresView: View {
         
         Button("Continue"){
             if viewModel.selectedGenres.count >= 3{
-                viewModel.isFavGenresSelected = true
+                viewModel.saveGenres()
+                genresWereSelected = true
             }
         }
         .frame(maxWidth: .infinity)
@@ -70,5 +72,5 @@ struct FavoriteGenresView: View {
 }
 
 #Preview {
-    FavoriteGenresView()
+    FavoriteGenresView(genresWereSelected: .constant(false))
 }

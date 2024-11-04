@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4BA152872CD8061700395490 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 4BA152862CD8061700395490 /* WrappingHStack */; };
 		4BA152892CD807FB00395490 /* allGenres.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4BA152882CD807FB00395490 /* allGenres.rtf */; };
+		4BA1528E2CD818B500395490 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 4BA1528D2CD818B500395490 /* FirebaseDatabase */; };
 		4BD097702CD794870026D2C7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4BD0976F2CD794870026D2C7 /* FirebaseAuth */; };
 		4BD097722CD7948F0026D2C7 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4BD097712CD7948F0026D2C7 /* FirebaseCore */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 			files = (
 				4BD097722CD7948F0026D2C7 /* FirebaseCore in Frameworks */,
 				4BA152872CD8061700395490 /* WrappingHStack in Frameworks */,
+				4BA1528E2CD818B500395490 /* FirebaseDatabase in Frameworks */,
 				4BD097702CD794870026D2C7 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +103,7 @@
 				4BD0976F2CD794870026D2C7 /* FirebaseAuth */,
 				4BD097712CD7948F0026D2C7 /* FirebaseCore */,
 				4BA152862CD8061700395490 /* WrappingHStack */,
+				4BA1528D2CD818B500395490 /* FirebaseDatabase */,
 			);
 			productName = MoviewLibrary;
 			productReference = 4B8713F12CC7FFBF00B8B4FA /* MoviewLibrary.app */;
@@ -392,6 +395,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4BA152852CD8061700395490 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
 			productName = WrappingHStack;
+		};
+		4BA1528D2CD818B500395490 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B61CF9D2CD793C100225F1F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 		4BD0976F2CD794870026D2C7 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

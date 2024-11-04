@@ -12,7 +12,6 @@ final class FavoriteGenresViewModel: ObservableObject{
     var allGenres:[String]
     
     @Published var selectedGenres = Set<String>()
-    @AppStorage("isFavGenresSelected") var isFavGenresSelected = false
     
     init(){
         allGenres = []
@@ -31,5 +30,9 @@ final class FavoriteGenresViewModel: ObservableObject{
         }
         allGenres.removeFirst()
         allGenres.removeLast()
+    }
+    
+    public func saveGenres(){
+        FirebaseDatabaseManager.shared.saveFavouriteUserGenres(favGenres: selectedGenres)
     }
 }

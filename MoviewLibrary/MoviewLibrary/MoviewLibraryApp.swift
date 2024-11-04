@@ -19,19 +19,38 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct MoviewLibraryApp: App {
     @AppStorage("isAuthenticated") private var isAuthenticated = false
-    @AppStorage("isFavGenresSelected") private var isFavGenresSelected = false
     @AppStorage("isDarkMode") private var isDarkMode = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+    @State private var genresWereSelected: Bool = false
+    @State private var doesUserSelectFavGenres: Bool? = nil  // nil означає, що дані ще не отримані
+    
     var body: some Scene {
         WindowGroup {
-            if isAuthenticated{
-                if isFavGenresSelected{
-                    NavigationView()
-                        .preferredColorScheme(isDarkMode ? .dark : .light)
-                }else{
-                    FavoriteGenresView()
+            if isAuthenticated {
+                Group {
+                    if let doesUserSelectFavGenres = doesUserSelectFavGenres {
+                        if doesUserSelectFavGenres {
+                            NavigationView()
+                                .preferredColorScheme(isDarkMode ? .dark : .light)
+                        } else {
+                            if genresWereSelected {
+                                NavigationView()
+                                    .preferredColorScheme(isDarkMode ? .dark : .light)
+                            } else {
+                                FavoriteGenresView(genresWereSelected: $genresWereSelected)
+                            }
+                        }
+                    } else {
+                        ProgressView()
+                    }
                 }
-            }else{
+                .onAppear {
+                    FirebaseDatabaseManager.shared.checkIfUserSelectFavGenres { doesUserSelectFavgenre in
+                        doesUserSelectFavGenres = doesUserSelectFavgenre
+                    }
+                }
+            } else {
                 AuthView()
             }
         }
